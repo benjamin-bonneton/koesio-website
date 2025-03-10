@@ -1,4 +1,5 @@
-import React,  { useState } from 'react';
+import React,  {useState, useEffect} from 'react';
+import axios from 'axios';
 
 const LivreDiv = ({ livre }) => {
   return (
@@ -25,11 +26,29 @@ const LivreDiv = ({ livre }) => {
 
 const LivresPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [livres] = useState([
-        { id: 1, titre: 'Nom du livre 1', id_genre: 1, id_auteur: 1 },
-        { id: 2, titre: 'Nom du livre 2', id_genre: 1, id_auteur: 1 },
-        { id: 3, titre: 'Nom du livre 3', id_genre: 1, id_auteur: 1 },
-    ]);
+    
+    const [livres, setLivres] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+              'username': process.env.REACT_APP_API_USERNAME,
+              'key_pass': process.env.REACT_APP_API_KEY_PASS
+            }
+        };
+
+        axios.get('http://127.0.0.1:3001/api/v1/livres', config)
+            .then(response => {
+                setLivres(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -38,6 +57,14 @@ const LivresPage = () => {
     const filteredLivres = livres.filter(livres =>
         livres.titre.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) {
+        return <div>Chargement...</div>;
+    }
+
+    if (error) {
+        return <div>Erreur : {error.message}</div>;
+    }
 
     return (
         <div>

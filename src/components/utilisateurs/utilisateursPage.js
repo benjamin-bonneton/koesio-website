@@ -9,7 +9,7 @@ const UserDiv = ({ user }) => {
             <p class="prenom">{user.prenom}</p>
         </div>
         <div class="utilisateurs-item-actions">
-            <a href={"/utilisateurs/modifier?id=" + user.id}>Modifier</a>
+            <a href={"/utilisateurs/modifier?id=" + user.id_utilisateur}>Modifier</a>
             <a href='/'>Supprimer</a>
         </div>
     </div>
@@ -18,6 +18,7 @@ const UserDiv = ({ user }) => {
 
 const UtilisateursPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
+
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -25,8 +26,8 @@ const UtilisateursPage = () => {
     useEffect(() => {
         const config = {
             headers: {
-              'username': '',
-              'key_pass': ''
+              'username': process.env.REACT_APP_API_USERNAME,
+              'key_pass': process.env.REACT_APP_API_KEY_PASS
             }
         };
 
