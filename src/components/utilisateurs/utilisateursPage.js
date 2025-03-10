@@ -1,4 +1,5 @@
-import React,  { useState } from 'react';
+import React,  {useState, useEffect} from 'react';
+import axios from 'axios';
 
 const UserDiv = ({ user }) => {
   return (
@@ -17,18 +18,28 @@ const UserDiv = ({ user }) => {
 
 const UtilisateursPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [users] = useState([
-        { nom: 'John', prenom: 'Doe', id: 1 },
-        { nom: 'Jane', prenom: 'Smith', id: 2 },
-        { nom: 'Alice', prenom: 'Johnson', id: 3 },
-        { nom: 'Bob', prenom: 'Brown', id: 4 },
-        { nom: 'Charlie', prenom: 'Davis', id: 5 },
-        { nom: 'Eve', prenom: 'Wilson', id: 6 },
-        { nom: 'Frank', prenom: 'Taylor', id: 7 },
-        { nom: 'Grace', prenom: 'Martinez', id: 8 },
-        { nom: 'Henry', prenom: 'Anderson', id: 9 },
-        { nom: 'Isabel', prenom: 'Thomas', id: 10 }
-    ]);
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+              'username': '',
+              'key_pass': ''
+            }
+        };
+
+        axios.get('http://127.0.0.1:3001/api/v1/utilisateurs', config)
+            .then(response => {
+                setUsers(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -38,6 +49,14 @@ const UtilisateursPage = () => {
         user.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.prenom.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) {
+        return <div>Chargement...</div>;
+    }
+
+    if (error) {
+        return <div>Erreur : {error.message}</div>;
+    }
 
     return (
         <div>
