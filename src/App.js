@@ -11,11 +11,14 @@ import LivresPage from './components/livres/livresPage';
 import LivresAddPage from './components/livres/livresAddPage';
 import LivresEditPage from './components/livres/livresEditPage';
 import LivresDetailsPage from './components/livres/livresDetailsPage';
+import EmpruntsPage from './components/emprunts/empruntsPage';
+import EmpruntsAddPage from './components/emprunts/empruntsAddPage';
+import EmpruntsEditPage from './components/emprunts/empruntsEditPage';
 import './assets/css/App.css';
 import './assets/css/utilisateurs.css';
 import './assets/css/auteurs.css';
 import './assets/css/livres.css';
-
+import './assets/css/emprunts.css';
 
 function App() {
     return (
@@ -26,6 +29,7 @@ function App() {
                     <Link to="/utilisateurs">Utilisateurs</Link>
                     <Link to="/auteurs">Auteurs</Link>
                     <Link to="/livres">Livres</Link>
+                    <Link to="/emprunts">Emprunts</Link>
                 </nav>
 
                 <Routes>
@@ -42,6 +46,10 @@ function App() {
                     <Route path="/livres/ajouter" element={<LivresAddPage />} />
                     <Route path="/livres/modifier" element={<LivresEditPage />} />
                     <Route path="/livres/details" element={<LivresDetailsPage />} />
+
+                    <Route path="/emprunts" element={<EmpruntsPage />} />
+                    <Route path="/emprunts/ajouter" element={<EmpruntsAddPage />} />
+                    <Route path="/emprunts/modifier" element={<EmpruntsEditPage />} />
                 </Routes>
             </div>
         </Router>

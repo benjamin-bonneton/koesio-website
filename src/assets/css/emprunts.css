@@ -1,0 +1,89 @@
+/* Emprunts */
+.emprunts-container {
+    width: 80%;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.emprunts-container table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.emprunts-container th {
+    background-color: #f5f5f5;
+    border: 1px solid #919191;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.emprunts-container td {
+    border: 1px solid #919191;
+    padding: 5px 10px;
+}
+
+.emprunts-container tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.emprunts-container tr:nth-child(odd) {
+    background-color: #e5e5e5;
+}
+
+.emprunts-container tr a {
+    background-color: #f5f5f5;
+    border: 1px solid #919191;
+    border-radius: 8px;
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.emprunts-container tr a:hover {
+    background-color: #e5e5e5;
+}
+
+/*Emprunts Add*/
+.emprunts-add-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.emprunts-add-container .form-group {
+    margin: 3vh 0;
+}
+
+.emprunts-add-container select {
+    display: flex;
+    width: 300px;
+    height: 30px;
+    margin-top: 1.8vh;
+    border: 1px solid #919191;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.emprunts-add-container button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    margin: 0 auto;
+    padding: 0 10px;
+    border: 1px solid #919191;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.emprunts-add-container button:hover {
+    background-color: #e5e5e5;
+}
