@@ -11,6 +11,11 @@ const LivresEditPage = () => {
                         <label for="titre">Titre</label>
                         <input type="text" id="titre" name="titre" />
                     </div>
+
+                    <div class="form-group">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" id="isbn" name="isbn" />
+                    </div>
                     
                     <div class="form-group">
                         <label for="auteur">Auteur</label>
