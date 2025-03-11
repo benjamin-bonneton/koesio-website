@@ -32,7 +32,6 @@ const GenresElements = () => {
     if (error) {
         return <p className="error">{error.message}</p>;
     }
-
     return (
         <select id="genre" name="genre">
             {genres.map(genre => (

@@ -5,7 +5,7 @@ const LivreDiv = ({ livre }) => {
   return (
     <div class="livres-item">
         <div class="livres-item-content">
-            <h3>{livre.titre}</h3>
+            <h3>{livre.titre} <br /> (ISBN {livre.isbn})</h3>
             <p class="genre">
                 Genre :<br/>
                 {livre.genre_nom}

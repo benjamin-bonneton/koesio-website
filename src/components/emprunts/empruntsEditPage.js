@@ -1,29 +1,23 @@
-import React from 'react';
-import LivresElements from '../data/livres';
-import UtilisateursElements from '../data/utilisateurs';
+import axios from 'axios';
 
 const EmpruntsEditPage = () => {
-    return (
-        <div>
-            <h1>Modifier un emprunt</h1>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
 
-            <div class="emprunts-add-container">
-                <form action="#" method="post" class="emprunts-add-form">
-                    <div class="form-group">
-                        <label for="livre">Livre</label>
-                        <LivresElements />
-                    </div>
+    const config = {
+        headers: {
+            'username': process.env.REACT_APP_API_USERNAME,
+            'key_pass': process.env.REACT_APP_API_KEY_PASS
+        }
+    };
 
-                    <div class="form-group">
-                        <label for="utilisateur">Utilisateur</label>
-                        <UtilisateursElements />
-                    </div>
-                    
-                    <button type="submit">Modifier</button>
-                </form>
-            </div>
-        </div>
-    );
+    axios.put(`http://127.0.0.1:3001/api/v1/emprunts/${id}`, null, config)
+        .then(response => {
+            window.location.href = '/emprunts';
+        })
+        .catch(error => {
+            alert(error.response.data.message);
+        });
 };
 
 export default EmpruntsEditPage;

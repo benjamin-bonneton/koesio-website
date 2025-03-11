@@ -12,7 +12,7 @@ const EmpruntDiv = ({ emprunt }) => {
             <td>{emprunt.date_retour}</td>
             <td>{status}</td>
             <td>
-                <a href={"/emprunts/modifier?id=" + emprunt.id_emprunt}>Modifier</a>
+                <a href={"/emprunts/modifier?id=" + emprunt.id_emprunt}>Rendre</a>
                 <a href='/'>Supprimer</a>
             </td>
         </tr>
@@ -36,7 +36,6 @@ const EmpruntsPage = () => {
 
         axios.get('http://127.0.0.1:3001/api/v1/emprunts', config)
             .then(response => {
-                console.log(response.data);
                 setEmprunts(response.data);
                 setLoading(false);
             })
