@@ -52,11 +52,14 @@ const UtilisateursPage = () => {
     );
 
     if (loading) {
-        return <div>Chargement...</div>;
+        return <p class="error">Chargement...</p>;
     }
 
     if (error) {
-        return <div>Erreur : {error.message}</div>;
+        if (error.response.status === 404) {
+            return <p class="error">Aucun utilisateur trouvé</p>;
+        }
+        return <p class="error">Erreur : {error.message}</p>;
     }
 
     return (

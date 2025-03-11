@@ -9,7 +9,7 @@ const AuteurDiv = ({ auteur }) => {
             <p class="prenom">{auteur.prenom}</p>
         </div>
         <div class="auteurs-item-actions">
-            <a href={"/auteurs/modifier?id=" + auteur.id}>Modifier</a>
+            <a href={"/auteurs/modifier?id=" + auteur.id_auteur}>Modifier</a>
             <a href='/'>Supprimer</a>
         </div>
     </div>
@@ -31,9 +31,9 @@ const AuteursPage = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/utilisateurs', config)
+        axios.get('http://127.0.0.1:3001/api/v1/auteurs', config)
             .then(response => {
-                setUsers(response.data);
+                setAuteurs(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -50,6 +50,17 @@ const AuteursPage = () => {
         auteurs.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
         auteurs.prenom.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) {
+        return <p class="error">Chargement...</p>;
+    }
+
+    if (error) {
+        if (error.response.status === 404) {
+            return <p class="error">Aucun auteur trouvé</p>;
+        }
+        return <p class="error">Erreur : {error.message}</p>;
+    }
 
     return (
         <div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import GenresElements from '../data/genres';
+import AuteursElements from '../data/auteurs';
 
 const LivresEditPage = () => {
     return (
@@ -19,22 +21,14 @@ const LivresEditPage = () => {
                     
                     <div class="form-group">
                         <label for="auteur">Auteur</label>
-                        <select id="auteur" name="auteur">
-                            <option value="1">Genre 1</option>
-                            <option value="2">Genre 2</option>
-                            <option value="3">Genre 3</option>
-                        </select>
+                        <AuteursElements />
                     </div>
 
                     <div class="form-group">
-                        <label for="titre">Genre</label>
-                        <select id="genre" name="genre">
-                            <option value="1">Genre 1</option>
-                            <option value="2">Genre 2</option>
-                            <option value="3">Genre 3</option>
-                        </select>
+                        <label for="genre">Genre</label>
+                        <GenresElements />
                     </div>
-                    <button type="submit">Ajouter</button>
+                    <button type="submit">Modifier</button>
                 </form>
             </div>
         </div>

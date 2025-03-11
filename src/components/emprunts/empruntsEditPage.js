@@ -1,4 +1,6 @@
 import React from 'react';
+import LivresElements from '../data/livres';
+import UtilisateursElements from '../data/utilisateurs';
 
 const EmpruntsEditPage = () => {
     return (
@@ -9,23 +11,15 @@ const EmpruntsEditPage = () => {
                 <form action="#" method="post" class="emprunts-add-form">
                     <div class="form-group">
                         <label for="livre">Livre</label>
-                        <select id="livre" name="livre">
-                            <option value="1">Livre 1</option>
-                            <option value="2">Livre 2</option>
-                            <option value="3">Livre 3</option>
-                        </select>
+                        <LivresElements />
                     </div>
 
                     <div class="form-group">
                         <label for="utilisateur">Utilisateur</label>
-                        <select id="utilisateur" name="utilisateur">
-                            <option value="1">Utilisateur 1</option>
-                            <option value="2">Utilisateur 2</option>
-                            <option value="3">Utilisateur 3</option>
-                        </select>
+                        <UtilisateursElements />
                     </div>
                     
-                    <button type="submit">Ajouter</button>
+                    <button type="submit">Modifier</button>
                 </form>
             </div>
         </div>

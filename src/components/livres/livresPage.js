@@ -8,16 +8,16 @@ const LivreDiv = ({ livre }) => {
             <h3>{livre.titre}</h3>
             <p class="genre">
                 Genre :<br/>
-                {livre.id_genre}
+                {livre.genre_nom}
             </p>
             <p>
                 Auteur :<br/>
-                {livre.id_auteur}
+                {livre.auteur_nom} {livre.auteur_prenom}
             </p>
         </div>
         <div class="livres-item-actions">
-            <a href={"/livres/details?id=" + livre.id}>Voir</a>
-            <a href={"/livres/modifier?id=" + livre.id}>Modifier</a>
+            <a href={"/livres/details?id=" + livre.id_livre}>Voir</a>
+            <a href={"/livres/modifier?id=" + livre.id_livre}>Modifier</a>
             <a href='/'>Supprimer</a>
         </div>
     </div>
@@ -59,11 +59,14 @@ const LivresPage = () => {
     );
 
     if (loading) {
-        return <div>Chargement...</div>;
+        return <p class="error">Chargement...</p>;
     }
 
     if (error) {
-        return <div>Erreur : {error.message}</div>;
+        if (error.response.status === 404) {
+            return <p class="error">Aucun livre trouvé</p>;
+        }
+        return <p class="error">Erreur : {error.message}</p>;
     }
 
     return (

@@ -41,3 +41,9 @@ body {
 .search-container a:hover {
   background-color: #e5e5e5;
 }
+
+/*Labels*/
+.error {
+  margin: 5vh;
+  text-align: center;;
+}
