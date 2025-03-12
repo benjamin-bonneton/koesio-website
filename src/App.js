@@ -39,7 +39,7 @@ import './assets/css/livres.css';
 import './assets/css/emprunts.css';
 
 
-const api_url = "http://127.0.0.1:3001/api/v1";
+const api_url = "http://82.64.152.98:3001/api/v1";
 
 
 function App() {
