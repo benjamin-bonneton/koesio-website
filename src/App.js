@@ -39,7 +39,7 @@ import './assets/css/livres.css';
 import './assets/css/emprunts.css';
 
 
-const api_url = "http://82.64.152.98:3001/api/v1";
+const api_url = "https://koesio-entretien-api.benjamin-bonneton.com/api/v1";
 
 
 function App() {
