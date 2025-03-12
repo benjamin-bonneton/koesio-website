@@ -4,7 +4,6 @@ import LivresElements from '../data/livres';
 import UtilisateursElements from '../data/utilisateurs';
 
 const EmpruntsAddPage = ({api_url}) => {
-    console.log(api_url);
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -16,8 +15,8 @@ const EmpruntsAddPage = ({api_url}) => {
 
         const config = {
             headers: {
-                'username': process.env.REACT_APP_API_USERNAME,
-                'key_pass': process.env.REACT_APP_API_KEY_PASS
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
             }
         };
 

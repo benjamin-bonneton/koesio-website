@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate  } from 'react-router-dom';
 import HomePage from './components/homePage';
 import UtilisateursPage from './components/utilisateurs/utilisateursPage';
 import UtilisateursAddPage from './components/utilisateurs/utilisateursAddPage';
@@ -23,15 +23,29 @@ import './assets/css/utilisateurs.css';
 import './assets/css/auteurs.css';
 import './assets/css/livres.css';
 import './assets/css/emprunts.css';
+import './assets/css/login.css'
 
 const api_url = "http://127.0.0.1:3001/api/v1";
 
 function App() {
+    const isUsernameSet = localStorage.getItem('username') !== null;
+    const isKeyPassSet = localStorage.getItem('key_pass') !== null;
+
+    if (!isUsernameSet || !isKeyPassSet) {
+        return (
+            <Router>
+                <Routes>
+                    <Route path="/" element={<HomePage api_url={api_url} />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </Router>
+        );
+    }
+
     return (
         <Router>
             <div>
                 <nav>
-                    <Link to="/">Home</Link>
                     <Link to="/utilisateurs">Utilisateurs</Link>
                     <Link to="/auteurs">Auteurs</Link>
                     <Link to="/livres">Livres</Link>
@@ -39,7 +53,6 @@ function App() {
                 </nav>
 
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
                     <Route path="/utilisateurs" element={<UtilisateursPage api_url={api_url}/>} />
                     <Route path="/utilisateurs/ajouter" element={<UtilisateursAddPage api_url={api_url}/>} />
                     <Route path="/utilisateurs/modifier" element={<UtilisateursEditPage api_url={api_url}/>} />

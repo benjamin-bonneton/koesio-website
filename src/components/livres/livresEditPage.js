@@ -14,8 +14,8 @@ const LivresEditPage = ({api_url}) => {
     useEffect(() => {
         const config = {
             headers: {
-                'username': process.env.REACT_APP_API_USERNAME,
-                'key_pass': process.env.REACT_APP_API_KEY_PASS
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
             }
         };
 
@@ -43,8 +43,8 @@ const LivresEditPage = ({api_url}) => {
 
         const config = {
             headers: {
-                'username': process.env.REACT_APP_API_USERNAME,
-                'key_pass': process.env.REACT_APP_API_KEY_PASS
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
             }
         };
 
@@ -73,12 +73,12 @@ const LivresEditPage = ({api_url}) => {
                 <form onSubmit={handleSubmit} class="livres-add-form">
                     <div class="form-group">
                         <label for="titre">Titre</label>
-                        <input type="text" id="titre" name="titre" defaultValue={livres[0].titre} />
+                        <input type="text" id="titre" name="titre" defaultValue={livres.livre_titre} />
                     </div>
 
                     <div class="form-group">
                         <label for="isbn">ISBN</label>
-                        <input type="text" id="isbn" name="isbn" defaultValue={livres[0].isbn} />
+                        <input type="text" id="isbn" name="isbn" defaultValue={livres.livre_isbn} />
                     </div>
                     
                     <div class="form-group">

@@ -1,5 +1,7 @@
 import React,  {useState, useEffect} from 'react';
 import axios from 'axios';
+import GenresElements from '../data/genres';
+import AuteursElements from '../data/auteurs';
 
 const LivreDiv = ({ livre }) => {
   return (
@@ -25,8 +27,6 @@ const LivreDiv = ({ livre }) => {
 };
 
 const LivresPage = ({api_url}) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    
     const [livres, setLivres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -34,8 +34,8 @@ const LivresPage = ({api_url}) => {
     useEffect(() => {
         const config = {
             headers: {
-              'username': process.env.REACT_APP_API_USERNAME,
-              'key_pass': process.env.REACT_APP_API_KEY_PASS
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
             }
         };
 
@@ -50,13 +50,34 @@ const LivresPage = ({api_url}) => {
             });
     }, [api_url]);
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    const filteredLivres = livres.filter(livres =>
-        livres.titre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        const formData = new FormData(e.target);
+        const data = {
+            id_genre: formData.get('genre_checkbox') ? formData.get('genre') : null,
+            id_auteur: formData.get('auteur_checkbox') ? formData.get('auteur') : null
+        };
+
+        const config = {
+            headers: {
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
+            },
+            params: data
+        };
+
+        axios.get(api_url + `/livres`, config)
+            .then(response => {
+                setLivres(response.data);
+                setLoading(false);
+                setError(null);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            });
+    };
 
     if (loading) {
         return <p class="error">Chargement...</p>;
@@ -69,9 +90,21 @@ const LivresPage = ({api_url}) => {
                     <h1>Les livres</h1>
 
                     <div class="search-container">
-                        <input type="text" placeholder="Rechercher un livre" value={searchTerm} onChange={handleSearch} />
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <input type="checkbox" id="genre_checkbox" name="genre_checkbox"/>
+                                <GenresElements api_url={api_url} />
+                            </div>
+                            <div>
+                                <input type="checkbox" id="auteur_checkbox" name="auteur_checkbox"/>
+                                <AuteursElements api_url={api_url}/>
+                            </div>
+                            <button type="submit">Rechercher</button>
+                        </form>
+                        
                         <a href="/livres/ajouter">Ajouter un livre</a>
                     </div>
+
                     <p class="error">Aucun livre trouvé</p>
                 </div>
             );
@@ -84,14 +117,25 @@ const LivresPage = ({api_url}) => {
             <h1>Les livres</h1>
 
             <div class="search-container">
-                <input type="text" placeholder="Rechercher un livre" value={searchTerm} onChange={handleSearch} />
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input type="checkbox" id="genre_checkbox" name="genre_checkbox"/>
+                        <GenresElements api_url={api_url} />
+                    </div>
+                    <div>
+                        <input type="checkbox" id="auteur_checkbox" name="auteur_checkbox"/>
+                        <AuteursElements api_url={api_url}/>
+                    </div>
+                    <button type="submit">Rechercher</button>
+                </form>
+                
                 <a href="/livres/ajouter">Ajouter un livre</a>
             </div>
 
             <div class="livres-container">
                 <div class="livres-list">
                     {
-                        filteredLivres.map((livre, index) => (
+                        livres.map((livre, index) => (
                             <LivreDiv key={index} livre={livre} />
                         ))
                     }

@@ -26,8 +26,8 @@ const UtilisateursPage = ({api_url}) => {
     useEffect(() => {
         const config = {
             headers: {
-              'username': process.env.REACT_APP_API_USERNAME,
-              'key_pass': process.env.REACT_APP_API_KEY_PASS
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
             }
         };
 

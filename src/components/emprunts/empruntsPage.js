@@ -1,5 +1,7 @@
 import React,  {useState, useEffect} from 'react';
 import axios from 'axios';
+import LivresElements from '../data/livres';
+import UtilisateursElements from '../data/utilisateurs';
 
 const EmpruntDiv = ({ emprunt }) => {
     let status = emprunt.date_retour == null ? "En cours" : "Rendu";
@@ -36,8 +38,6 @@ const EmpruntDiv = ({ emprunt }) => {
 };
 
 const EmpruntsPage = ({api_url}) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    
     const [emprunts, setEmprunts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -45,8 +45,8 @@ const EmpruntsPage = ({api_url}) => {
     useEffect(() => {
         const config = {
             headers: {
-              'username': process.env.REACT_APP_API_USERNAME,
-              'key_pass': process.env.REACT_APP_API_KEY_PASS
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
             }
         };
 
@@ -61,13 +61,35 @@ const EmpruntsPage = ({api_url}) => {
             });
     }, [api_url]);
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    const filteredEmprunts = emprunts.filter(emprunts =>
-        emprunts.livre_titre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        const formData = new FormData(e.target);
+        const data = {
+            id_livre: formData.get('livre_checkbox') ? formData.get('livre') : null,
+            id_utilisateur: formData.get('utilisateur_checkbox') ? formData.get('utilisateur') : null,
+            en_cours: formData.get('en_cours') ? "true" : null
+        };
+
+        const config = {
+            headers: {
+                'username': localStorage.getItem('username'),
+                'key_pass': localStorage.getItem('key_pass')
+            },
+            params: data
+        };
+
+        axios.get(api_url + `/emprunts`, config)
+            .then(response => {
+                setEmprunts(response.data);
+                setLoading(false);
+                setError(null);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            });
+    };
 
     if (loading) {
         return <p class="error">Chargement...</p>;
@@ -80,7 +102,22 @@ const EmpruntsPage = ({api_url}) => {
                     <h1>Les emprunts</h1>
 
                     <div class="search-container">
-                        <input type="text" placeholder="Rechercher un emprunt" value={searchTerm} onChange={handleSearch} />
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <input type="checkbox" id="livre_checkbox" name="livre_checkbox"/>
+                                <LivresElements api_url={api_url} />
+                            </div>
+                            <div>
+                                <input type="checkbox" id="utilisateur_checkbox" name="utilisateur_checkbox"/>
+                                <UtilisateursElements api_url={api_url}/>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="en_cours" name="en_cours"/>
+                                <label for="en_cours">En cours</label>
+                            </div>
+                            <button type="submit">Rechercher</button>
+                        </form>
+                        
                         <a href="/emprunts/ajouter">Ajouter un emprunt</a>
                     </div>
 
@@ -96,26 +133,43 @@ const EmpruntsPage = ({api_url}) => {
             <h1>Les emprunts</h1>
 
             <div class="search-container">
-                <input type="text" placeholder="Rechercher un emprunt" value={searchTerm} onChange={handleSearch} />
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input type="checkbox" id="livre_checkbox" name="livre_checkbox"/>
+                        <LivresElements api_url={api_url} />
+                    </div>
+                    <div>
+                        <input type="checkbox" id="utilisateur_checkbox" name="utilisateur_checkbox"/>
+                        <UtilisateursElements api_url={api_url}/>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="en_cours" name="en_cours"/>
+                        <label for="en_cours">En cours</label>
+                    </div>
+                    <button type="submit">Rechercher</button>
+                </form>
+                
                 <a href="/emprunts/ajouter">Ajouter un emprunt</a>
             </div>
 
             <div class="emprunts-container">
                 <table>
-                    <tr>
-                        <th>ISBN</th>
-                        <th>Titre</th>
-                        <th>Utilisateur</th>
-                        <th>Date d'emprunt</th>
-                        <th>Date de retour</th>
-                        <th>Etat</th>
-                        <th>Actions</th>
-                    </tr>
-                    {
-                        filteredEmprunts.map((emprunt, index) => (
-                            <EmpruntDiv key={index} emprunt={emprunt} />
-                        ))
-                    }
+                    <tbody>
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Titre</th>
+                            <th>Utilisateur</th>
+                            <th>Date d'emprunt</th>
+                            <th>Date de retour</th>
+                            <th>Etat</th>
+                            <th>Actions</th>
+                        </tr>
+                        {
+                            emprunts.map((emprunt, index) => (
+                                <EmpruntDiv key={index} emprunt={emprunt} />
+                            ))
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
