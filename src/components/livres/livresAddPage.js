@@ -3,7 +3,7 @@ import axios from 'axios';
 import GenresElements from '../data/genres';
 import AuteursElements from '../data/auteurs';
 
-const LivresAddPage = () => {
+const LivresAddPage = ({api_url}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -22,10 +22,9 @@ const LivresAddPage = () => {
             }
         };
 
-        axios.post('http://127.0.0.1:3001/api/v1/livres', data, config)
+        axios.post(api_url + '/livres', data, config)
             .then(response => {
-                alert('Livre ajouté avec succès!');
-                e.target.reset();
+                window.location.href = '/livres';
             })
             .catch(error => {
                 alert(error.response.data.message);
@@ -51,12 +50,12 @@ const LivresAddPage = () => {
 
                     <div className="form-group">
                         <label htmlFor="auteur">Auteur</label>
-                        <AuteursElements />
+                        <AuteursElements api_url={api_url} />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="genre">Genre</label>
-                        <GenresElements />
+                        <GenresElements api_url={api_url} />
                     </div>
 
                     <button type="submit">Ajouter</button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AuteursEditPage = () => {
+const AuteursEditPage = ({api_url}) => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
@@ -17,7 +17,7 @@ const AuteursEditPage = () => {
             }
         };
 
-        axios.get(`http://127.0.0.1:3001/api/v1/auteurs/${id}`, config)
+        axios.get(api_url + `/auteurs/${id}`, config)
             .then(response => {
                 setAuteurs(response.data);
                 setLoading(false);
@@ -26,7 +26,7 @@ const AuteursEditPage = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, [id]);
+    }, [id, api_url]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,10 +44,9 @@ const AuteursEditPage = () => {
             }
         };
 
-        axios.put(`http://127.0.0.1:3001/api/v1/auteurs/${id}`, data, config)
+        axios.put(api_url + `/auteurs/${id}`, data, config)
             .then(response => {
-                alert('Auteur modifié avec succès!');
-                e.target.reset();
+                window.location.href = '/auteurs';
             })
             .catch(error => {
                 alert(error.response.data.message);

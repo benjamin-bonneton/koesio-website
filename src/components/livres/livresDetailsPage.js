@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LivresDetailsPage = () => {
+const LivresDetailsPage = ({api_url}) => {
     return (
         <div class="livres-details">
             <div class="details">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UtilisateursEditPage = () => {
+const UtilisateursEditPage = ({api_url}) => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
@@ -17,7 +17,7 @@ const UtilisateursEditPage = () => {
             }
         };
 
-        axios.get(`http://127.0.0.1:3001/api/v1/utilisateurs/${id}`, config)
+        axios.get(api_url + `/utilisateurs/${id}`, config)
             .then(response => {
                 setUsers(response.data);
                 setLoading(false);
@@ -26,7 +26,7 @@ const UtilisateursEditPage = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, [id]);
+    }, [id, api_url]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,10 +44,9 @@ const UtilisateursEditPage = () => {
             }
         };
 
-        axios.put(`http://127.0.0.1:3001/api/v1/utilisateurs/${id}`, data, config)
+        axios.put(api_url + `/utilisateurs/${id}`, data, config)
             .then(response => {
-                alert('Utilisateur modifié avec succès!');
-                e.target.reset();
+                window.location.href = '/utilisateurs';
             })
             .catch(error => {
                 alert(error.response.data.message);

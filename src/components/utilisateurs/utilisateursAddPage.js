@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const UtilisateursAddPage = () => {
+const UtilisateursAddPage = ({api_url}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -18,10 +18,9 @@ const UtilisateursAddPage = () => {
             }
         };
 
-        axios.post(`http://127.0.0.1:3001/api/v1/utilisateurs`, data, config)
+        axios.post(api_url + `/utilisateurs`, data, config)
             .then(response => {
-                alert('Utilisateur ajouté avec succès!');
-                e.target.reset();
+                window.location.href = '/utilisateurs';
             })
             .catch(error => {
                 alert(error.response.data.message);

@@ -10,13 +10,13 @@ const AuteurDiv = ({ auteur }) => {
         </div>
         <div class="auteurs-item-actions">
             <a href={"/auteurs/modifier?id=" + auteur.id_auteur}>Modifier</a>
-            <a href='/'>Supprimer</a>
+            <a href={"/auteurs/supprimer?id=" + auteur.id_auteur}>Supprimer</a>
         </div>
     </div>
   );
 };
 
-const AuteursPage = () => {
+const AuteursPage = ({api_url}) => {
     const [searchTerm, setSearchTerm] = useState('');
     
     const [auteurs, setAuteurs] = useState([]);
@@ -31,7 +31,7 @@ const AuteursPage = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/auteurs', config)
+        axios.get(api_url + '/auteurs', config)
             .then(response => {
                 setAuteurs(response.data);
                 setLoading(false);
@@ -40,7 +40,7 @@ const AuteursPage = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -57,7 +57,17 @@ const AuteursPage = () => {
 
     if (error) {
         if (error.response.status === 404) {
-            return <p class="error">Aucun auteur trouvé</p>;
+            return (
+                <div>
+                    <h1>Les auteurs</h1>
+
+                    <div class="search-container">
+                        <input type="text" placeholder="Rechercher un auteur" value={searchTerm} onChange={handleSearch} />
+                        <a href="/auteurs/ajouter">Ajouter un auteur</a>
+                    </div>
+                    <p class="error">Aucun auteur trouvé</p>
+                </div>
+            );
         }
         return <p class="error">Erreur : {error.message}</p>;
     }

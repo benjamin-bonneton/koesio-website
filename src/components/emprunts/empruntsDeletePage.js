@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const EmpruntsEditPage = ({api_url}) => {
+const EmpruntsDeletePage = ({api_url}) => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
@@ -11,13 +11,14 @@ const EmpruntsEditPage = ({api_url}) => {
         }
     };
 
-    axios.put(api_url + `/emprunts/${id}`, null, config)
+    axios.delete(api_url + `/emprunts/${id}`, config)
         .then(response => {
             window.location.href = '/emprunts';
         })
         .catch(error => {
+            console.log(error);
             alert(error.response.data.message);
         });
 };
 
-export default EmpruntsEditPage;
+export default EmpruntsDeletePage;

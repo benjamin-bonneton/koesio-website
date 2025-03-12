@@ -3,7 +3,7 @@ import axios from 'axios';
 import GenresElements from '../data/genres';
 import AuteursElements from '../data/auteurs';
 
-const LivresEditPage = () => {
+const LivresEditPage = ({api_url}) => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
@@ -19,7 +19,7 @@ const LivresEditPage = () => {
             }
         };
 
-        axios.get(`http://127.0.0.1:3001/api/v1/livres/${id}`, config)
+        axios.get(api_url + `/livres/${id}`, config)
             .then(response => {
                 setLivres(response.data);
                 setLoading(false);
@@ -28,7 +28,7 @@ const LivresEditPage = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, [id]);
+    }, [id, api_url]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,10 +48,9 @@ const LivresEditPage = () => {
             }
         };
 
-        axios.put(`http://127.0.0.1:3001/api/v1/livres/${id}`, data, config)
+        axios.put(api_url + `/livres/${id}`, data, config)
             .then(response => {
-                alert('Livre modifié avec succès!');
-                e.target.reset();
+                window.location.href = '/livres';
             })
             .catch(error => {
                 alert(error.response.data.message);
@@ -84,12 +83,12 @@ const LivresEditPage = () => {
                     
                     <div class="form-group">
                         <label for="auteur">Auteur</label>
-                        <AuteursElements />
+                        <AuteursElements api_url={api_url} />
                     </div>
 
                     <div class="form-group">
                         <label for="genre">Genre</label>
-                        <GenresElements/>
+                        <GenresElements api_url={api_url} />
                     </div>
                     <button type="submit">Modifier</button>
                 </form>

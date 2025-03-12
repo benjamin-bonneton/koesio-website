@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UsersElements = () => {
+const UsersElements = ({api_url}) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const UsersElements = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/utilisateurs', config)
+        axios.get(api_url + '/utilisateurs', config)
             .then(response => {
                 setUsers(response.data);
                 setLoading(false);
@@ -23,7 +23,7 @@ const UsersElements = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     if (loading) {
         return <p className="error">Chargement...</p>;

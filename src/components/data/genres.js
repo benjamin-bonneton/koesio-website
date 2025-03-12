@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const GenresElements = () => {
+const GenresElements = ({api_url}) => {
     const [genres, setGenres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const GenresElements = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/genres', config)
+        axios.get(api_url + '/genres', config)
             .then(response => {
                 setGenres(response.data);
                 setLoading(false);
@@ -23,7 +23,7 @@ const GenresElements = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     if (loading) {
         return <p className="error">Chargement...</p>;

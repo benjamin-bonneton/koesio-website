@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const LivresElements = ({ genre_id }) => {
+const LivresElements = ({api_url}) => {
     const [livres, setLivres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const LivresElements = ({ genre_id }) => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/livres', config)
+        axios.get(api_url + '/livres', config)
             .then(response => {
                 setLivres(response.data);
                 setLoading(false);
@@ -23,7 +23,7 @@ const LivresElements = ({ genre_id }) => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     if (loading) {
         return <p className="error">Chargement...</p>;

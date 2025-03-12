@@ -10,13 +10,13 @@ const UserDiv = ({ user }) => {
         </div>
         <div class="utilisateurs-item-actions">
             <a href={"/utilisateurs/modifier?id=" + user.id_utilisateur}>Modifier</a>
-            <a href='/'>Supprimer</a>
+            <a href={"/utilisateurs/supprimer?id=" + user.id_utilisateur} >Supprimer</a>
         </div>
     </div>
   );
 };
 
-const UtilisateursPage = () => {
+const UtilisateursPage = ({api_url}) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const [users, setUsers] = useState([]);
@@ -31,7 +31,7 @@ const UtilisateursPage = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/utilisateurs', config)
+        axios.get(api_url + '/utilisateurs', config)
             .then(response => {
                 setUsers(response.data);
                 setLoading(false);
@@ -40,7 +40,7 @@ const UtilisateursPage = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -57,7 +57,17 @@ const UtilisateursPage = () => {
 
     if (error) {
         if (error.response.status === 404) {
-            return <p class="error">Aucun utilisateur trouvé</p>;
+            return (
+                <div>
+                    <h1>Les utilisateurs</h1>
+
+                    <div class="search-container">
+                        <input type="text" placeholder="Rechercher un utilisateur" value={searchTerm} onChange={handleSearch} />
+                        <a href="/utilisateurs/ajouter">Ajouter un utilisateur</a>
+                    </div>
+                    <p class="error">Aucun utilisateur trouvé</p>
+                </div>
+            );
         }
         return <p class="error">Erreur : {error.message}</p>;
     }

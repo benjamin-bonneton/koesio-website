@@ -18,13 +18,13 @@ const LivreDiv = ({ livre }) => {
         <div class="livres-item-actions">
             <a href={"/livres/details?id=" + livre.id_livre}>Voir</a>
             <a href={"/livres/modifier?id=" + livre.id_livre}>Modifier</a>
-            <a href='/'>Supprimer</a>
+            <a href={"/livres/supprimer?id=" + livre.id_livre}>Supprimer</a>
         </div>
     </div>
   );
 };
 
-const LivresPage = () => {
+const LivresPage = ({api_url}) => {
     const [searchTerm, setSearchTerm] = useState('');
     
     const [livres, setLivres] = useState([]);
@@ -39,7 +39,7 @@ const LivresPage = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/livres', config)
+        axios.get(api_url + '/livres', config)
             .then(response => {
                 setLivres(response.data);
                 setLoading(false);
@@ -48,7 +48,7 @@ const LivresPage = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
@@ -64,7 +64,17 @@ const LivresPage = () => {
 
     if (error) {
         if (error.response.status === 404) {
-            return <p class="error">Aucun livre trouvé</p>;
+            return (
+                <div>
+                    <h1>Les livres</h1>
+
+                    <div class="search-container">
+                        <input type="text" placeholder="Rechercher un livre" value={searchTerm} onChange={handleSearch} />
+                        <a href="/livres/ajouter">Ajouter un livre</a>
+                    </div>
+                    <p class="error">Aucun livre trouvé</p>
+                </div>
+            );
         }
         return <p class="error">Erreur : {error.message}</p>;
     }

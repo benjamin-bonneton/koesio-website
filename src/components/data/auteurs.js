@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AuteursElements = () => {
+const AuteursElements = ({api_url}) => {
     const [auteurs, setAuteurs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const AuteursElements = () => {
             }
         };
 
-        axios.get('http://127.0.0.1:3001/api/v1/auteurs', config)
+        axios.get(api_url + '/auteurs', config)
             .then(response => {
                 setAuteurs(response.data);
                 setLoading(false);
@@ -23,7 +23,7 @@ const AuteursElements = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []);
+    }, [api_url]);
 
     if (loading) {
         return <p className="error">Chargement...</p>;

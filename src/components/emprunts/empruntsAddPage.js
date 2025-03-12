@@ -3,7 +3,8 @@ import axios from 'axios';
 import LivresElements from '../data/livres';
 import UtilisateursElements from '../data/utilisateurs';
 
-const EmpruntsAddPage = () => {
+const EmpruntsAddPage = ({api_url}) => {
+    console.log(api_url);
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -20,10 +21,9 @@ const EmpruntsAddPage = () => {
             }
         };
 
-        axios.post(`http://127.0.0.1:3001/api/v1/emprunts`, data, config)
+        axios.post(api_url + `/emprunts`, data, config)
             .then(response => {
-                alert('Emprunt ajouté avec succès!');
-                e.target.reset();
+                window.location.href = '/emprunts';
             })
             .catch(error => {
                 alert(error.response.data.message);
@@ -38,12 +38,12 @@ const EmpruntsAddPage = () => {
                 <form onSubmit={handleSubmit} class="emprunts-add-form">
                     <div class="form-group">
                         <label for="livre">Livre</label>
-                        <LivresElements />
+                        <LivresElements api_url={api_url} />
                     </div>
 
                     <div class="form-group">
                         <label for="utilisateur">Utilisateur</label>
-                        <UtilisateursElements />
+                        <UtilisateursElements api_url={api_url}/>
                     </div>
                     
                     <button type="submit">Ajouter</button>
