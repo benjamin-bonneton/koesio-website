@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+
 const UtilisateursAddPage = ({api_url}) => {
+    // Gérer l'envoi du formulaire
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -27,25 +29,29 @@ const UtilisateursAddPage = ({api_url}) => {
             });
     };
 
+    // Contenu de la page
     return (
         <div>
             <h1>Ajouter un utilisateur</h1>
 
-            <div class="utilisateurs-add-container">
-                <form onSubmit={handleSubmit} method="post" class="utilisateurs-add-form">
-                    <div class="form-group">
-                        <label for="nom">Nom</label>
+            <div className="form-add-container">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="nom">Nom</label>
                         <input type="text" id="nom" name="nom" />
                     </div>
-                    <div class="form-group">
-                        <label for="prenom">Prénom</label>
+
+                    <div className="form-group">
+                        <label htmlFor="prenom">Prénom</label>
                         <input type="text" id="prenom" name="prenom" />
                     </div>
+
                     <button type="submit">Ajouter</button>
                 </form>
             </div>
         </div>
     );
 };
+
 
 export default UtilisateursAddPage;

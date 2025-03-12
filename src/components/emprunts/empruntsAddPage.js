@@ -3,7 +3,9 @@ import axios from 'axios';
 import LivresElements from '../data/livres';
 import UtilisateursElements from '../data/utilisateurs';
 
+
 const EmpruntsAddPage = ({api_url}) => {
+    // Gérer l'envoi du formulaire
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -29,19 +31,20 @@ const EmpruntsAddPage = ({api_url}) => {
             });
     };
 
+    // Contenu de la page
     return (
         <div>
             <h1>Ajouter un emprunt</h1>
 
-            <div class="emprunts-add-container">
-                <form onSubmit={handleSubmit} class="emprunts-add-form">
-                    <div class="form-group">
-                        <label for="livre">Livre</label>
+            <div className="form-add-container">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="livre">Livre</label>
                         <LivresElements api_url={api_url} />
                     </div>
 
-                    <div class="form-group">
-                        <label for="utilisateur">Utilisateur</label>
+                    <div className="form-group">
+                        <label htmlFor="utilisateur">Utilisateur</label>
                         <UtilisateursElements api_url={api_url}/>
                     </div>
                     
@@ -51,5 +54,6 @@ const EmpruntsAddPage = ({api_url}) => {
         </div>
     );
 };
+
 
 export default EmpruntsAddPage;

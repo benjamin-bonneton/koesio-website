@@ -1,4 +1,4 @@
-/* Livres */
+/*Page Livres*/
 .livres-container {
     display: flex;
     justify-content: center;
@@ -13,9 +13,9 @@
 }
 
 .livres-item {
+    width: 300px;
     display: grid;
     grid-template-rows: 1fr 70px;
-    width: 300px;
     margin: 10px;
     border: 1px solid #919191;
     border-radius: 8px;
@@ -23,7 +23,6 @@
 
 .livres-item-content {
     text-align: center;
-    column-gap: 1vw;
     border-bottom: 1px solid #919191;
 }
 
@@ -34,10 +33,10 @@
 }
 
 .livres-item-actions a {
+    padding: 5px 10px;
     background-color: #f5f5f5;
     border: 1px solid #919191;
     border-radius: 8px;
-    padding: 5px 10px;
     text-decoration: none;
     color: black;
     cursor: pointer;
@@ -48,91 +47,38 @@
     background-color: #e5e5e5;
 }
 
-/*Livres Add*/
-.livres-add-container {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-
-.livres-add-container .form-group {
-    margin: 3vh 0;
-}
-
-.livres-add-container input {
-    display: flex;
-    width: 300px;
-    height: 30px;
-    margin: 1.8vh auto;
-    border: 1px solid #919191;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.livres-add-container select {
-    display: flex;
-    width: 300px;
-    height: 30px;
-    margin: 1.8vh auto;
-    border: 1px solid #919191;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.livres-add-container button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    margin: 0 auto;
-    padding: 0 10px;
-    border: 1px solid #919191;
-    border-radius: 8px;
-    background-color: #f5f5f5;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.livres-add-container button:hover {
-    background-color: #e5e5e5;
-}
-
-/*Livres détails*/
-
+/*Page Livres Détails*/
 .livres-details {
     display: grid;
     grid-template-columns: 30% 1fr;
+    margin: 5vh 0;
 }
 
 .livres-details img {
-    display: flex;
-    margin: 5vh auto;
     width: auto;
     height: 400px;
+    display: flex;
+    margin: 0 auto;
     border-radius: 12px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
-.livres-details h1 {
-    margin: 5vh;
-}
-
 .livres-details table {
+    width: 80%;
     margin: 5vh auto;
     border-collapse: collapse;
-    width: 80%;
     text-align: center;
 }
 
 .livres-details th {
+    padding: 10px;
     background-color: #f5f5f5;
     border: 1px solid #919191;
-    padding: 10px;
 }
 
 .livres-details td {
-    border: 1px solid #919191;
     padding: 10px;
+    border: 1px solid #919191;
 }
 
 .livres-details .main {

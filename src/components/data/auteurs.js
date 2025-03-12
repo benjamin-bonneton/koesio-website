@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+
 
 const AuteursElements = ({api_url}) => {
     const [auteurs, setAuteurs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+    // Obtenir les auteurs
     useEffect(() => {
         const config = {
             headers: {
@@ -25,6 +28,7 @@ const AuteursElements = ({api_url}) => {
             });
     }, [api_url]);
 
+    // Contenu du composant
     if (loading) {
         return <p className="error">Chargement...</p>;
     }
@@ -41,5 +45,6 @@ const AuteursElements = ({api_url}) => {
         </select>
     );
 };
+
 
 export default AuteursElements;

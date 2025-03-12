@@ -3,6 +3,7 @@ import axios from 'axios';
 import LivresElements from '../data/livres';
 import UtilisateursElements from '../data/utilisateurs';
 
+
 const EmpruntDiv = ({ emprunt }) => {
     let status = emprunt.date_retour == null ? "En cours" : "Rendu";
 
@@ -42,6 +43,7 @@ const EmpruntsPage = ({api_url}) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Obtenir les emprunts
     useEffect(() => {
         const config = {
             headers: {
@@ -61,6 +63,7 @@ const EmpruntsPage = ({api_url}) => {
             });
     }, [api_url]);
 
+    // Gérer l'envoi du formulaire
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -91,8 +94,9 @@ const EmpruntsPage = ({api_url}) => {
             });
     };
 
+    // Contenu de la page
     if (loading) {
-        return <p class="error">Chargement...</p>;
+        return <p className="error">Chargement...</p>;
     }
 
     if (error) {
@@ -101,60 +105,66 @@ const EmpruntsPage = ({api_url}) => {
                 <div>
                     <h1>Les emprunts</h1>
 
-                    <div class="search-container">
+                    <div className="search-container">
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <input type="checkbox" id="livre_checkbox" name="livre_checkbox"/>
                                 <LivresElements api_url={api_url} />
                             </div>
+
                             <div>
                                 <input type="checkbox" id="utilisateur_checkbox" name="utilisateur_checkbox"/>
                                 <UtilisateursElements api_url={api_url}/>
                             </div>
+
                             <div>
                                 <input type="checkbox" id="en_cours" name="en_cours"/>
-                                <label for="en_cours">En cours</label>
+                                <label htmlFor="en_cours">En cours</label>
                             </div>
+
                             <button type="submit">Rechercher</button>
                         </form>
                         
                         <a href="/emprunts/ajouter">Ajouter un emprunt</a>
                     </div>
 
-                    <p class="error">Aucun emprunt trouvé</p>
+                    <p className="error">Aucun emprunt trouvé</p>
                 </div>
             );
         }
-        return <p class="error">Erreur : {error.message}</p>;
+        return <p className="error">Erreur : {error.message}</p>;
     }
 
     return (
         <div>
             <h1>Les emprunts</h1>
 
-            <div class="search-container">
+            <div className="search-container">
                 <form onSubmit={handleSubmit}>
                     <div>
                         <input type="checkbox" id="livre_checkbox" name="livre_checkbox"/>
                         <LivresElements api_url={api_url} />
                     </div>
+
                     <div>
                         <input type="checkbox" id="utilisateur_checkbox" name="utilisateur_checkbox"/>
                         <UtilisateursElements api_url={api_url}/>
                     </div>
+
                     <div>
                         <input type="checkbox" id="en_cours" name="en_cours"/>
-                        <label for="en_cours">En cours</label>
+                        <label htmlFor="en_cours">En cours</label>
                     </div>
+
                     <button type="submit">Rechercher</button>
                 </form>
                 
                 <a href="/emprunts/ajouter">Ajouter un emprunt</a>
             </div>
 
-            <div class="emprunts-container">
+            <div className="emprunts-container">
                 <table>
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>ISBN</th>
                             <th>Titre</th>
@@ -164,6 +174,8 @@ const EmpruntsPage = ({api_url}) => {
                             <th>Etat</th>
                             <th>Actions</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         {
                             emprunts.map((emprunt, index) => (
                                 <EmpruntDiv key={index} emprunt={emprunt} />
@@ -175,5 +187,6 @@ const EmpruntsPage = ({api_url}) => {
         </div>
     );
 };
+
 
 export default EmpruntsPage;

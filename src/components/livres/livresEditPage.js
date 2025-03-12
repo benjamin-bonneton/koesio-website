@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import GenresElements from '../data/genres';
 import AuteursElements from '../data/auteurs';
+
 
 const LivresEditPage = ({api_url}) => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
-    const [livres, setLivres] = useState([]);
+    const [livre, setLivre] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Récupérer les informations du livre
     useEffect(() => {
         const config = {
             headers: {
@@ -21,7 +23,7 @@ const LivresEditPage = ({api_url}) => {
 
         axios.get(api_url + `/livres/${id}`, config)
             .then(response => {
-                setLivres(response.data);
+                setLivre(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -30,6 +32,7 @@ const LivresEditPage = ({api_url}) => {
             });
     }, [id, api_url]);
 
+    // Gérer l'envoi du formulaire
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -57,6 +60,7 @@ const LivresEditPage = ({api_url}) => {
             });
     };
 
+    // Contenu de la page
     if (loading) {
         return <p className="error">Chargement...</p>;
     }
@@ -69,25 +73,25 @@ const LivresEditPage = ({api_url}) => {
         <div>
             <h1>Modifier un livre</h1>
 
-            <div class="livres-add-container">
-                <form onSubmit={handleSubmit} class="livres-add-form">
-                    <div class="form-group">
-                        <label for="titre">Titre</label>
-                        <input type="text" id="titre" name="titre" defaultValue={livres.livre_titre} />
+            <div className="form-add-container">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="titre">Titre</label>
+                        <input type="text" id="titre" name="titre" defaultValue={livre.livre_titre} />
                     </div>
 
-                    <div class="form-group">
-                        <label for="isbn">ISBN</label>
-                        <input type="text" id="isbn" name="isbn" defaultValue={livres.livre_isbn} />
+                    <div className="form-group">
+                        <label htmlFor="isbn">ISBN</label>
+                        <input type="text" id="isbn" name="isbn" defaultValue={livre.livre_isbn} />
                     </div>
                     
-                    <div class="form-group">
-                        <label for="auteur">Auteur</label>
+                    <div className="form-group">
+                        <label htmlFor="auteur">Auteur</label>
                         <AuteursElements api_url={api_url} />
                     </div>
 
-                    <div class="form-group">
-                        <label for="genre">Genre</label>
+                    <div className="form-group">
+                        <label htmlFor="genre">Genre</label>
                         <GenresElements api_url={api_url} />
                     </div>
                     <button type="submit">Modifier</button>
@@ -96,5 +100,6 @@ const LivresEditPage = ({api_url}) => {
         </div>
     );
 };
+
 
 export default LivresEditPage;

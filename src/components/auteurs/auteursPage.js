@@ -1,19 +1,21 @@
 import React,  {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const AuteurDiv = ({ auteur }) => {
-  return (
-    <div class="auteurs-item">
-        <div className='auteurs-item-content'>
-            <p class="nom">{auteur.nom}</p>
-            <p class="prenom">{auteur.prenom}</p>
+
+const AuteurDiv = ({auteur}) => {
+    return (
+        <div className="auteurs-item">
+            <div className='auteurs-item-content'>
+                <p className="nom">{auteur.nom}</p>
+                <p className="prenom">{auteur.prenom}</p>
+            </div>
+
+            <div className="auteurs-item-actions">
+                <a href={"/auteurs/modifier?id=" + auteur.id_auteur}>Modifier</a>
+                <a href={"/auteurs/supprimer?id=" + auteur.id_auteur}>Supprimer</a>
+            </div>
         </div>
-        <div class="auteurs-item-actions">
-            <a href={"/auteurs/modifier?id=" + auteur.id_auteur}>Modifier</a>
-            <a href={"/auteurs/supprimer?id=" + auteur.id_auteur}>Supprimer</a>
-        </div>
-    </div>
-  );
+    );
 };
 
 const AuteursPage = ({api_url}) => {
@@ -23,6 +25,7 @@ const AuteursPage = ({api_url}) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Obtenir la liste des auteurs
     useEffect(() => {
         const config = {
             headers: {
@@ -42,6 +45,7 @@ const AuteursPage = ({api_url}) => {
             });
     }, [api_url]);
 
+    // Gérer la recherche
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -51,8 +55,9 @@ const AuteursPage = ({api_url}) => {
         auteurs.prenom.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Contenu de la page
     if (loading) {
-        return <p class="error">Chargement...</p>;
+        return <p className="error">Chargement...</p>;
     }
 
     if (error) {
@@ -61,28 +66,29 @@ const AuteursPage = ({api_url}) => {
                 <div>
                     <h1>Les auteurs</h1>
 
-                    <div class="search-container">
+                    <div className="search-container">
                         <input type="text" placeholder="Rechercher un auteur" value={searchTerm} onChange={handleSearch} />
                         <a href="/auteurs/ajouter">Ajouter un auteur</a>
                     </div>
-                    <p class="error">Aucun auteur trouvé</p>
+
+                    <p className="error">Aucun auteur trouvé</p>
                 </div>
             );
         }
-        return <p class="error">Erreur : {error.message}</p>;
+        return <p className="error">Erreur : {error.message}</p>;
     }
 
     return (
         <div>
             <h1>Les auteurs</h1>
 
-            <div class="search-container">
+            <div className="search-container">
                 <input type="text" placeholder="Rechercher un auteur" value={searchTerm} onChange={handleSearch} />
                 <a href="/auteurs/ajouter">Ajouter un auteur</a>
             </div>
 
-            <div class="auteurs-container">
-                <div class="auteurs-list">
+            <div className="auteurs-container">
+                <div className="auteurs-list">
                     {
                         filteredAuteurs.map((auteur, index) => (
                             <AuteurDiv key={index} auteur={auteur} />
@@ -93,5 +99,6 @@ const AuteursPage = ({api_url}) => {
         </div>
     );
 };
+
 
 export default AuteursPage;

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+
 
 const GenresElements = ({api_url}) => {
     const [genres, setGenres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Obtenir les genres
     useEffect(() => {
         const config = {
             headers: {
@@ -25,6 +27,7 @@ const GenresElements = ({api_url}) => {
             });
     }, [api_url]);
 
+    // Contenu du composant
     if (loading) {
         return <p className="error">Chargement...</p>;
     }
@@ -32,6 +35,7 @@ const GenresElements = ({api_url}) => {
     if (error) {
         return <p className="error">{error.message}</p>;
     }
+
     return (
         <select id="genre" name="genre">
             {genres.map(genre => (
@@ -40,5 +44,6 @@ const GenresElements = ({api_url}) => {
         </select>
     );
 };
+
 
 export default GenresElements;

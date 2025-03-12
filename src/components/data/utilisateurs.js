@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+
 
 const UsersElements = ({api_url}) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Obtenir les utilisateurs
     useEffect(() => {
         const config = {
             headers: {
@@ -25,6 +27,7 @@ const UsersElements = ({api_url}) => {
             });
     }, [api_url]);
 
+    // Contenu du composant
     if (loading) {
         return <p className="error">Chargement...</p>;
     }
@@ -41,5 +44,6 @@ const UsersElements = ({api_url}) => {
         </select>
     );
 };
+
 
 export default UsersElements;

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+
 
 const LivresElements = ({api_url}) => {
     const [livres, setLivres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Obtenir les livres
     useEffect(() => {
         const config = {
             headers: {
@@ -25,6 +27,7 @@ const LivresElements = ({api_url}) => {
             });
     }, [api_url]);
 
+    // Contenu du composant
     if (loading) {
         return <p className="error">Chargement...</p>;
     }
@@ -36,12 +39,11 @@ const LivresElements = ({api_url}) => {
     return (
         <select id="livre" name="livre">
             {livres.map(livre => (
-                <option key={livre.id_livre} value={livre.id_livre}>
-                    (ISBN {livre.isbn}) {livre.titre}
-                </option>
+                <option key={livre.id_livre} value={livre.id_livre}>(ISBN {livre.isbn}) {livre.titre}</option>
             ))}
         </select>
     );
 };
+
 
 export default LivresElements;

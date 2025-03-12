@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const AuteursDeletePage = ({api_url}) => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
@@ -20,5 +21,6 @@ const AuteursDeletePage = ({api_url}) => {
             alert(error.response.data.message);
         });
 };
+
 
 export default AuteursDeletePage;

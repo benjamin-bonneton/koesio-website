@@ -3,7 +3,9 @@ import axios from 'axios';
 import GenresElements from '../data/genres';
 import AuteursElements from '../data/auteurs';
 
+
 const LivresAddPage = ({api_url}) => {
+    // Gérer l'envoi du formulaire
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -31,13 +33,13 @@ const LivresAddPage = ({api_url}) => {
             });
     };
 
-
+    // Contenu de la page
     return (
         <div>
             <h1>Ajouter un livre</h1>
 
-            <div className="livres-add-container">
-                <form onSubmit={handleSubmit} className="livres-add-form">
+            <div className="form-add-container">
+                <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="titre">Titre</label>
                         <input type="text" id="titre" name="titre" />
@@ -64,5 +66,6 @@ const LivresAddPage = ({api_url}) => {
         </div>
     );
 };
+
 
 export default LivresAddPage;
